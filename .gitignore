@@ -1,39 +1,28 @@
-# History files
-.Rhistory
-.Rapp.history
+# Created by https://www.toptal.com/developers/gitignore/api/jupyternotebooks
+# Edit at https://www.toptal.com/developers/gitignore?templates=jupyternotebooks
 
-# Session Data files
-.RData
+### JupyterNotebooks ###
+# gitignore template for Jupyter Notebooks
+# website: http://jupyter.org/
 
-# User-specific files
-.Ruserdata
+.ipynb_checkpoints
+*/.ipynb_checkpoints/*
 
-# Example code in package build process
-*-Ex.R
+# IPython
+profile_default/
+ipython_config.py
 
-# Output files from R CMD build
-/*.tar.gz
+data/2016_HighResLandCover/*
+data/assessor/*
+data/forest_change/*
+data/L3_SHP_M101_FRANKLIN/*
+data/openspace/*
+data/parcels/*
+data/prihab/*
+data/roads/*
+data/townsurvey_shp*
 
-# Output files from R CMD check
-/*.Rcheck/
+# Remove previous ipynb_checkpoints
+#   git rm -r .ipynb_checkpoints/
 
-# RStudio files
-.Rproj.user/
-
-# produced vignettes
-vignettes/*.html
-vignettes/*.pdf
-
-# OAuth2 token, see https://github.com/hadley/httr/releases/tag/v0.3
-.httr-oauth
-
-# knitr and R markdown default cache directories
-*_cache/
-/cache/
-
-# Temporary files created by R markdown
-*.utf8.md
-*.knit.md
-
-# R Environment Variables
-.Renviron
+# End of https://www.toptal.com/developers/gitignore/api/jupyternotebooks
