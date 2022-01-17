@@ -1,0 +1,333 @@
+\documentclass[12pt, stu, floatsintext,table]{apa7}
+
+
+\usepackage{booktabs}
+\usepackage{float}
+\usepackage{wrapfig}
+\usepackage{subfig}
+\usepackage{setspace}
+\usepackage{caption}
+\usepackage[section]{placeins}
+\captionsetup[figure]{font=footnotesize,labelfont=small}
+
+\makeatletter
+\AtBeginDocument{%
+  \expandafter\renewcommand\expandafter\subsection\expandafter
+    {\expandafter\@fb@secFB\subsection}%
+  \newcommand\@fb@secFB{\FloatBarrier
+    \gdef\@fb@afterHHook{\@fb@topbarrier \gdef\@fb@afterHHook{}}}%
+  \g@addto@macro\@afterheading{\@fb@afterHHook}%
+  \gdef\@fb@afterHHook{}%
+}
+\makeatother
+
+
+\title{EE 508 Final Project: An analysis of Franklin, MA CPA fund use for new open space}
+\shorttitle{ }
+\author{Rose Determan}
+\affiliation{ }
+\course{EE 508: Data Science for Conservation Decisions}
+\duedate{January 2, 2022}
+\professor{ }
+
+\begin{document}
+\maketitle
+%------------------------------------------------------------------------------------------%
+\section{Introduction}
+\begin{wrapfigure}{r}{0.5\textwidth}
+  \begin{center}
+    \includegraphics[width=0.48\textwidth]{figures/state.png}
+  \end{center}
+  \caption{Franklin, MA is highlighted in orange.}
+\end{wrapfigure}
+
+Franklin, MA is a municipality in the Commonwealth of Massachusetts 28 miles South of Boston, MA and 26 miles North of Providence, RI (Figure 1). As of the 2020 Annual Report, there was an estimated population of 33,644 individuals. 
+On May 6, 2020 the town council approved the adoption of the Community Preservation Act (CPA) and town members voted in favor of the initiative on November 3, 2021. The Massachusetts Community Preservation Act, was originally signed into state law in 2000, and 187 cities and towns in Massachusetts have adopted CPA. The goal of the CPA was to create a source of funds so communities could retain aspects of their town that fall outside of traditional municipal government jurisdictions. Municipalities contribute to their CPA fund from a surcharge on real property taxes, and the Commonwealth contributes to each municipality's fund (\emph{CPA: An Overview}) These funds can be used for
+\begin{itemize}
+  \setlength\itemsep{0.0em}
+  \item the acquisition, creation and preservation of \textbf{open space}
+  \item the acquisition, preservation, rehabilitation, and restoration of \textbf{historic resources}
+  \item the acquisition, creation, preservation and rehabilitation and restoration of \textbf{land for recreational use}
+  \item the acquisition, creation, preservation, rehabilitation and restoration, and support of \textbf{community housing} (Town of Franklin 2020 Annual Report)
+\end{itemize}
+Statewide, since 2000, 32,566 acres of open space have been preserved as part of CPA funded projects (\emph{CPA: An Overview}).    
+
+\begin{wrapfigure}[18]{r}{0.5\textwidth}
+\includegraphics[width=0.5\textwidth]{figures/developed.png}
+\caption{Developed land cover is shown in white and undeveloped areas are in dark purple. The town border is also outlined in white. }
+\end{wrapfigure}
+In recent years, Franklin residents have been concerned with the rate and breadth of development in the community. In the November 2021 election, two incumbent members of the Planning Board (serving for a combined 30 years on the board) lost to two new candidates. Newly elected Beth Wierling and Jennifer Williams share similar philosophies on development. In an interview prior to the election, Williams stated, "I believe we should be more thoughtful about where and how we clear land, even when subdivisions and new homes fall within approved current regulations and by-laws" (Jennifer Williams, 2021). It is believed that this concern was a contributing factor in the community's support of CPA adoption in 2020, since in 2007 the community voted against adopting the CPA (CPC Report). Although there are highly developed areas, there are also relatively undeveloped areas (Figure 2). 
+The town government has compiled several goals both in a 2013 Master Plan and in a 2020 Open Space and Recreation Plan, and below are several relevant goals (Franklin Planning and Community Development, 2020 and 2016 Open Space and Recreation Plan). 
+\begin{itemize}
+\setlength\itemsep{0.0em}
+    \item Preserve and enhance existing unprotected natural and open space resources in Franklin.
+    \item Protect, preserve and enhance Franklin’s natural resources.
+    \item Implement growth management, sustainable development and low impact development techniques to preserve, protect and enhance the Town's natural, cultural and historic resources.
+     \item Maximize recreational opportunities to meet the community’s evolving needs by maintaining current inventory of facilities and programs and by providing new facilities and programs for both active and passive recreation.
+    \item  Protect natural, historical and cultural resources and maintain Franklin's New England character.
+\item Preserve and protect the Town’s Water Resources
+\end{itemize}  
+Franklin is still in the beginning stages of creating a strategy for use of CPA funds. The following report details several strategies for land acquisition with a focus on the creation of new protected open spaces. 
+
+
+%------------------------------------------------------------------------------------------%
+\section{Methods}  
+All data sets used are publicly available. First, parcels were identified along with their assessed value as of 2020. Parcels which are already protected, parcels assessed under Chapter 61, and parcels already owned by the Town of Franklin were excluded from the analysis (Figure 3). Protected areas fall into four categories based on the time frame of protection. The categories are in perpetuity, temporary, limited, or none (Table 1). The "none" category includes land that is not legally protected but includes scout camps, private golf courses, and private woodlands. Priority habitat areas, forest cover, wetland area, and undeveloped areas were each considered (Table 2). In each set of analyses, one variable is selected for focus. Three forms of maximization were used separately for each variable. 
+\begin{enumerate}
+    \item Optimal allocation
+    \item Largest parcels
+    \item Least expensive parcels
+\end{enumerate}  
+
+\begin{table}[htbp]
+  \centering
+  \caption{Types of land protection and examples in Franklin, MA. Most land is categorized as protected in perpetuity. This is land that is legally protected and often owned by the municipality or state. Land protected in a limited status is legally protected, but not in perpetuity.}
+  \resizebox{\textwidth}{!}{
+   \begin{tabular}{@{}llr@{}} 
+        \toprule
+        \multicolumn{1}{c}{Protection Type} & \multicolumn{1}{c}{Franklin Example}                                       & \multicolumn{1}{c}{Total Area (acres)} \\ \midrule
+        In Perpetuity                       & Franklin State Forest, Charles River Natural Valley Storage Area, Well \#5 & 3925.5                                 \\
+        Temporary                           & None                                                                       & 0.0                                    \\
+        Limited                             & JFK Elementary School, King Street Park, St. Mary's Cemetery               & 292.1                                  \\
+        None                                & Franklin Country Club, Maplegate Country Club                              & 158.3                                  \\ \bottomrule
+        \end{tabular}
+        }
+\end{table}
+All parcels with any priority habitat areas were included for analysis. For forest and wetland land cover, each parcel must contain at least one acre of the selected cover. This is an arbitrary cutoff, but it helps prevent the selection of separate parcels that are small and do not help advance the goal of land protection. To be considered an undeveloped parcel, the parcels include greater than an acre of undeveloped land and is less than 50\% developed land.   
+
+In the optimal allocation method, each qualifying parcel has a calculated cost per land cover where the assessed value is divided by the target land area. The parcels are then sorted in ascending order based on the cost per land cover. Parcels are selected until the budget is exhausted. When selecting for largest parcels, qualifying parcels are sorted from largest to smallest. Parcels are selected in order until the budget is exhausted. For the least expensive parcel selection method, the qualifying parcels are sorted based on assessed value in ascending order and selected in order until the budget is exhausted. 
+\begin{table}[htbp]
+\centering
+\caption{Selected variables. Below is a table of data sets that were used in the analysis. Each includes the link to the source, except for Tax Parcel CSV which was provided by personal communication from Franklin's Director of Assessing (November, 2021)}
+\begin{tabular}{@{}ll@{}}
+\toprule
+\multicolumn{1}{c}{Data Type} & \multicolumn{1}{c}{Purpose}             \\ \midrule
+\href{https://www.mass.gov/info-details/massgis-data-municipalities}{Town Boundary}                                               & Clip data to relevant spatial extent              \\
+\href{https://www.mass.gov/info-details/massgis-data-property-tax-parcels}{Tax Parcels}                                           & Provide spatial boundaries for each parcel        \\
+Land Cover 2016               \\
+\href{https://glad.earthengine.app/view/global-forest-change#dl=1;old=off;bl=off;lon=20;lat=10;zoom=3;}{Forest Change}            & Identification of at-risk parcels                 \\
+\href{https://www.mass.gov/info-details/massgis-data-protected-and-recreational-openspace}{Protected and Recreational Open Space} & Identification of existing protected areas        \\
+\href{https://www.mass.gov/info-details/massgis-data-nhesp-priority-habitats-of-rare-species}{Priority Habitat of Rare Species}   & Identification of parcels with priority habitats  \\
+Tax Parcel CSV                                                                                                                    & Obtain assessed value of each parcel              \\ \bottomrule
+\end{tabular}
+\end{table}
+
+
+The budget used for this analysis is \$1,000,000. The estimated CPA revenue is approximately \$1,000,000 per year and 10\% must be allocated for open space (Community Preservation Act Fact Sheet). The \$1,000,000 selected budget represents approximately ten years worth of CPA revenue allocated for open space. 
+
+\begin{table}[htbp]
+\centering
+  \caption{Types of land protection and examples in Franklin, MA. Most land is categorized as protected in perpetuity. This is land that is legally protected and often owned by the municipality or state. Land protected in a limited status is legally protected, but not in perpetuity.}
+   \resizebox{0.95\textwidth}{!}{
+\begin{tabular}{cccr}
+\hline
+\multicolumn{1}{c}{Category} & Target Land Use           & Tax Assessment                                      & \multicolumn{1}{c}{Franklin Acres} \\ \hline
+61                           & Forestry                  & Based on market value of potential forest products &   0                                 \\
+61 A                         & Agriculture               & Based on market value of potential farm products   &   522.9                             \\
+61 B                         & Open Space and Recreation & 75\% reduction in assessed value                   &   650.6                             \\ \hline
+\end{tabular}}
+\end{table}
+In Massachusetts, Chapter 61 is a program that provides tax breaks to enrolled land owners. Most properties are assessed based on the value at their "highest and best use,” or the value that the land would have if it was developed, but land enrolled in a Chapter 61 program is assessed differently. There are three categories of Chapter 61 programs (Table 3). For the following analyses, lands assessed under Chapter 61 regulations have been excluded, although they are a valuable town resource (Figure 3). They have been excluded because of the different assessment scheme, and in this analysis, assessed value is used as the measure of land value and cost. When including these parcels, they are often selected due to their low assessed value. Their exclusion in the analysis does not indicate a lack of importance. These parcels are larger than five acres and largely undeveloped, so they offer valuable natural services. They have been excluded due to the decreased assessed value and these areas are likely not at risk for development. Since landowners must enroll and renew participation annually, these landowners have an incentive to maintain their land as undeveloped (Van Fleet et al.). Municipalities have the right of first refusal when Chapter 61 properties are being sold. If these parcels do come up for sale, the town should consider acquisition. Figure 3 shows the areas that have been excluded based on their protected status. 
+\begin{figure}[hbtp]
+    \centering
+    \includegraphics[width = 0.8\textwidth]{figures/existing_prot.png}
+    \caption{Existing protected areas. On the left, all lightly shaded areas are excluded from the analysis and are listed as protected based on the MassGIS Protected and Recreational OpenSpace shapefile. On the right, protected areas are shaded and areas assessed based on the Chapter 61 program are color coded.}
+\end{figure}
+\section{Results}
+\subsection{Priority Habitat} 
+The total area of priority habitat in the municipality is small compared to forest or wetland areas, so there are fewer parcels for selection. Table 4 shows the species that are of priority which are found in Franklin, MA. 
+\begin{table}[h]
+\caption{Rare species found in Franklin, MA sorted by most recent observation}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{@{}lllll@{}}
+\toprule
+\multicolumn{1}{c}{\textbf{Common Name}} & \multicolumn{1}{c}{\textbf{Scientific Name}} & \multicolumn{1}{c}{\textbf{Taxonomic Group}} & \multicolumn{1}{c}{\textbf{MESA Status}} & \multicolumn{1}{c}{\textbf{Most Recent Obs.}} \\ \midrule
+Wood Turtle                              & Glyptemys insculpta                          & Reptile                                      & Special Concern                          & 2016                                          \\
+Eastern Box Turtle                       & Terrapene carolina                           & Reptile                                      & Special Concern                          & 2015                                          \\
+Least Bittern                            & Ixobrychus exilis                            & Bird                                         & Endangered                               & 1992                                          \\
+Small-flowered Buttercup                 & Ranunculus micranthus                        & Vascular Plant                               & Endangered                               & 1910                                          \\
+Stiff Yellow Flax                        & Linum medium var. texanum                    & Vascular Plant                               & Threatened                               & 1886                                         \\ \bottomrule          
+\end{tabular}}
+\end{table}
+Priority habitats are limited to the north east corner of Franklin, near Plain St., and the western town border around Daniels St.. In the three selection methods, parcels from both areas are selected each time (Figure 4). In the optimal selection method there are eight parcels selected which are about 38 acres total, 84\% of which is priority habitat, and 75\% of the selected land area borders a parcel that is already protected (Table 5). The least expensive method selects the largest area of land, but it is the least efficient, so although the largest area would be acquired, only 46\% of it would be areas of priority habitat. 
+\begin{figure}[hbtp]
+    \centering
+    \includegraphics[width = \textwidth]{figures/n_61prihab.png}
+    \caption{Selected parcels of priority habitat excluding existing protected land using three optimization methods. }
+\end{figure}
+\begin{table}[hbtp]
+\caption{Summary of priority habitat parcel selections using three methods.}
+  \resizebox{\textwidth}{!}{
+\begin{tabular}{@{}crrrrrr@{}}
+\toprule
+ & \multicolumn{1}{c}{\begin{tabular}[c]{@{}c@{}}Number of\\ Selected Parcels\end{tabular}} & \multicolumn{1}{c}{\begin{tabular}[c]{@{}c@{}}Area \\ (acres)\end{tabular}} & \multicolumn{1}{c}{\begin{tabular}[c]{@{}c@{}}Area of Priority Habitat\\ (acres)\end{tabular}} & \multicolumn{1}{c}{Efficiency \%} & \multicolumn{1}{c}{Budget Used} & \multicolumn{1}{c}{\begin{tabular}[c]{@{}c@{}}\% Area Borders\\ Protected Land\end{tabular}} \\ \midrule
+Optimal & 8 & 38 & 32 & 84 & 935000 & 75 \\
+Largest & 3 & 30 & 27 & 90 & 839200 & 75 \\
+Least Expensive & 12 & 49 & 23 & 46 & 976100 & 76 \\ \bottomrule
+\end{tabular}}
+\end{table}
+\subsection{Forest}
+ There are forested areas throughout Franklin (Figure 5). Areas such as the Franklin State Forest or Southern New England Trunkline Trail are already protected. In the optimal selection process, 18 parcels with forests were selected which cover a total of 180 acres, and 113 are categorized as forest cover. In the optimal selection process, 78\% of the land is part of a parcel that borders a parcel that is already protected. Although the 18 parcels are relatively small, most border an area that is already protected (Table 6). The least expensive selection method and the largest parcel selection method yield results that are quite different. In the largest parcel selection method one parcel that is nearly 47 acres is selected. This parcel is on Upper Union St. and is owned by the Cistercian Nuns. The least expensive method selects 40 parcels that are largely separate from each other and existing protected areas. 
+\begin{figure}[hbtp]
+    \centering
+    \includegraphics[width = \textwidth]{figures/n_61forest.png}
+    \caption{Selected parcels of forest excluding existing protected land using three optimization methods. }
+\end{figure}
+
+\begin{table}[hbtp]
+\caption{Summary of forested parcel selections using three methods.} 
+  \resizebox{\textwidth}{!}{
+\begin{tabular}{@{}crrrrrr@{}}
+\toprule
+ & \multicolumn{1}{c}{\begin{tabular}[c]{@{}c@{}}Number of\\ Selected Parcels\end{tabular}} & \multicolumn{1}{c}{\begin{tabular}[c]{@{}c@{}}Area \\ (acres)\end{tabular}} & \multicolumn{1}{c}{\begin{tabular}[c]{@{}c@{}}Area of Forest\\ (acres)\end{tabular}} & \multicolumn{1}{c}{Efficiency\%} & \multicolumn{1}{c}{Budget Used} & \multicolumn{1}{c}{\begin{tabular}[c]{@{}c@{}}\% Area Borders\\ Protected Land\end{tabular}} \\ \midrule
+Optimal & 18 & 180 & 113 & 63 & 951200 & 78 \\
+Largest & 1 & 47 & 35 & 75 & 818400 & 100 \\
+Least Expensive & 40 & 101 & 73 & 73 & 964400 & 29 \\ \bottomrule
+\end{tabular}}
+\end{table}
+\subsection{Wetland}
+Much of the connected wetlands in Franklin is already owned by the town or protected by another source. For example, the Army Corps of Engineer own land along Mine Brook which runs across the town from south east to north west. Despite this, there are significant areas of unprotected wetlands (Figure 6). Using the optimal selection approach, eighteen parcels were selected, and include areas along Lincoln Street, Pond Street, and Chestnut Street. Of the 162 acres which were selected, 90 of these acres are categorized as wetlands. This is one of the least efficient selections when compared to all other land uses. The largest parcel selection has the 49\% efficiency which is the lowest of all methods and land uses (Table 7). When selecting the largest parcels with wetlands, there are three parcels that can be acquired within the budget. Two of these parcels are also selected in the optimal allocation method. 
+\begin{figure}[hbtp]
+    \centering
+    \includegraphics[width = \textwidth]{figures/n_61wetland.png}
+    \caption{Selected parcels of wetlands excluding existing protected land using three optimization methods.}
+\end{figure}
+\begin{table}[hbtp]
+\caption{Summary of selected wetland parcels. } 
+  \resizebox{\textwidth}{!}{
+\begin{tabular}{@{}crrrrrr@{}}
+\toprule
+ & \multicolumn{1}{c}{\begin{tabular}[c]{@{}c@{}}Number of\\ Selected Parcels\end{tabular}} & \multicolumn{1}{c}{\begin{tabular}[c]{@{}c@{}}Area \\ (acres)\end{tabular}} & \multicolumn{1}{c}{\begin{tabular}[c]{@{}c@{}}Area of Wetlands\\ (acres)\end{tabular}} & \multicolumn{1}{c}{Efficiency\%} & \multicolumn{1}{c}{Budget Used} & \multicolumn{1}{c}{\begin{tabular}[c]{@{}c@{}}\% Area Borders\\ Protected Land\end{tabular}} \\ \midrule
+Optimal & 18 & 180 & 113 & 63 & 951200 & 78 \\
+Largest & 3 & 89 & 44 & 49 & 864500 & 100 \\
+Least Expensive & 24 & 111 & 66 & 60 & 961800 & 42 \\ \bottomrule
+\end{tabular}}
+\end{table}
+\subsection{Undeveloped Land}
+Undeveloped land is the least restricted land use category used. Undeveloped land excludes area categorized as impervious or developed open space and includes forest, and wetlands, as well as cultivated land, pasture, or shrub/scrub. These areas can be found throughout the municipality (Figure 7). Because of this expansive definition, this method selects the most land area. The optimal selection method selects 198 acres of land (Table 8). Two of these parcels are owned by condominium complexes. One selected parcel is owned by the Cistercian Nuns who, in addition to the forested parcel which was selected in the forest largest parcel selection method, have pasture with sheep and a solar farm. It seems that forested parcels in south eastern Franklin are large, but do not offer the best price per area. The least expensive method selects 54 parcels, which is the most of any selection method, but these parcels sum to nearly 89 acres. These parcels are disjoint and 32\% of the land borders a parcel that is already protected. 
+\begin{figure}[hbtp]
+    \centering
+    \includegraphics[width = \textwidth]{figures/n_61ndev.png}
+    \caption{Selected parcels of undeveloped land excluding existing protected land using three optimization methods. }
+\end{figure}
+
+\begin{table}[hbtp]
+\caption{Summary of selected undeveloped parcels.} 
+  \resizebox{\textwidth}{!}{
+\begin{tabular}{@{}crrrrrr@{}}
+\toprule
+ & \multicolumn{1}{c}{\begin{tabular}[c]{@{}c@{}}Number of\\ Selected Parcels\end{tabular}} & \multicolumn{1}{c}{\begin{tabular}[c]{@{}c@{}}Area \\ (acres)\end{tabular}} & \multicolumn{1}{c}{\begin{tabular}[c]{@{}c@{}}Area of Undeveloped\\ (acres)\end{tabular}} & \multicolumn{1}{c}{Efficiency\%} & \multicolumn{1}{c}{Budget Used} & \multicolumn{1}{c}{\begin{tabular}[c]{@{}c@{}}\% Area Borders\\ Protected Land\end{tabular}} \\ \midrule
+Optimal & 18 & 202 & 176 & 87 & 995000 & 91 \\
+Largest & 3 & 89 & 75 & 84 & 864500 & 100 \\
+Least Expensive & 54 & 89 & 86 & 97 & 971300 & 32 \\ \bottomrule
+\end{tabular}}
+\end{table}
+
+\subsection{Summary}
+\begin{figure}[hbtp]
+    \centering
+    \includegraphics[width = \textwidth]{figures/summary.png}
+    \caption{Means of selected measures for each parcel selection method. The colored line shows the mean for the selection method, and the points show the values of each of the four land covers, priority habitat, forest, wetlands, and undeveloped land. }
+\end{figure}
+Figure 8 shows summaries for each value used to evaluate the parcel selection methods. The colored line shows the mean for the selection method, and the points show the values of each of the four land covers, priority habitat, forest, wetlands, and undeveloped land.  
+
+The optimal selection method selects the most area and the most area of the target land cover, although it does not select the greatest number of parcels. The largest parcel selection method selects the least number of parcels, the least total area, and the least area of target land cover. This selection method also has the largest difference from the budget, which means that the most money is left over. The largest parcel selection method also selects the highest proportion of land area that borders an existing protected parcel. This is likely due to the small number of parcels selected. If only one parcel is selected, and that parcel borders protected areas, the proportion of land area that borders an existing protected parcel is one. In contrast, the least expensive parcel selection method selects the lowest proportion of land area that also borders a protected parcel. The least expensive method selects the most parcels, which makes logical sense. When there are smaller, less expensive parcels, more can be selected within the budget. Interestingly, all the parcel selection methods have approximately the same average efficiency, which means that each selection method has approximately the same proportion of target land cover to non-target land cover selected. 
+
+\begin{figure}[hbtp]
+    \centering
+    \includegraphics[width = \textwidth]{figures/summary_lc.png}
+    \caption{Means of selected measures for each selected land cover. The colored line shows the mean for the land cover, and the points show the values of each of the three selection methods.}
+\end{figure}
+Figure 9 shows a similar plot, but summarized by the land cover. Each bar shows the mean for the land cover and each point shows the values for each of the selection methods. Patterns here are more subtle than for the selection methods. For example, each land cover has a similar mean difference from budget and a similar percent land area that borders an existing protected parcel. The priority habitat land cover has the lowest number of selected parcels and the least area selected. This is likely because there is not much priority habitat in the town, so there are fewer parcels to select. In contrast, non-developed land has the highest average number of selected parcels, area selected, and efficiency, and again this is probably due to the high occurrence of non-developed parcels, so there are more areas to select. 
+
+\section{Discussion}
+Each method presented in the above analysis presents a single strategy for conservation. As shown above, each method yields varied results. One assumption of this project is that the data are up to date and accurate. The land cover data (forest, wetlands, developed) were last updated in 2016, so it can be expected that there has been change in land cover since the latest update. Assessed parcel value is used to represent the cost of land acquisition, but it is a simple representation, since there are more elements to acquiring land than simply the assessed value. Additionally, the analysis only considers one land cover at a time. Perhaps the town wants to conserve a variety of land covers rather than exclusively forest, for example. The analysis has used arbitrary cutoffs to determine an "acceptable" parcel for conservation. For example, to be considered in the above analyses, a forest parcel must be at least one acre in area. In reality there could be another cutoff that better suits the needs of the town. Due to these assumptions, the analysis should not be viewed as prescriptive, but rather an evaluation of the town and a set of suggestions.     
+
+On average, the optimal allocation method protects the largest land area and the largest parcel selection method protects the least area. This seems counter-intuitive at first, but when selecting only the largest parcels the budget runs out quickly and fewer areas can be conserved. The least expensive parcel selection method selects the most parcels, on average, but has the fewest borders with existing protected land. The least expensive parcels are often small and separate from each other.  
+Overall the optimal allocation method is ideal for parcel selection, since it offers, on average, the most area that is protected within the constraints of a budget. This method though, is an idealization of the world, and this analysis is imperfect by making assumptions to simplify the scope of the project. In order to protect the most area, non-developed land should be the target, but the town may have other goals that take into account the quality of the undeveloped land. The optimal parcel selection of non-developed land protects the most area with nearly 90\% of the selected land being undeveloped. Forested areas, wetlands, and priority habitat areas each provide value to the town in different ways. Perhaps the ideal method is not to prioritize a single land cover, but to ensure that a variety of land covers are protected. 
+
+%------------------------------------------------------------------------------------------------------------------------------%
+\section{Conclusion}
+This project is an exploratory analysis of options for the Town of Franklin's allocation of CPA funds to acquire new open space areas. The optimal allocation method, provides the greatest land area at the best value, and the non-developed land cover is most expansive and covers the most area. If the town's goal is to protect the most area, officials should consider implementing the optimal selection method with non-developed land as the target land area. This is a simplification of reality, since there are a variety of goals that the town is working to achieve. This project provides an outline of potential ways to optimize land acquisition. None is perfect, but each offers insights into a method that the town could consider to more systematically plan land conservation through the use of CPA funds.  
+
+\section{Works Cited}
+\onehalfspacing
+\begin{flushleft}
+CPA: An Overview | Community Preservation Coalition. Retrieved December 29, 2021, from \url{https://www.communitypreservation.org/about}  
+\newline
+\newline
+CPC Report | Community Preservation Coalition. Retrieved December 29, 2021, from \url{https://www.communitypreservation.org/cpc-report?report_src=bbzvidkqg|a=dr&rid=241} 
+\newline 
+\newline
+Community Preservation Act Fact Sheet. Retrieved January 17, 2022, from https://www.franklinma.gov/sites/g/files/vyhlif6896/f/uploads/cpa_fact_sheet_3.pdf
+\newline 
+\newline
+Jennifer Williams. (September 2021). \emph{Franklin Voter Guide.} Retrieved December 29, 2021, from \url{https://www.franklinvoterguide.org/2021-voter-guide/guide-planning-board/jennifer-williams}  
+\newline
+\newline
+Taberner, B. W. (2020). \emph{Update on implementation of 2013 master plan}[Memorandum]. Franklin Planning and Community Development. \url{https://www.franklinma.gov/sites/g/files/vyhlif6896/f/uploads/masterplan_update_materials.pdf}  
+\newline
+\newline
+Van Fleet, T., Catanzaro, P., \& Kittredge, D.. Chapter 61 Programs: Understanding the Massachusetts Ch. 61 Current Use Tax Programs. \url{https://www.mass.gov/files/documents/2017/10/25/chapter-61-programs.pdf}
+\end{flushleft}
+
+%------------------------------------------------------------------------------------------------------------------------------%
+
+\section{Appendix}
+
+\begin{figure}[hbtp]
+    \centering
+    \includegraphics[width=0.75\linewidth]{figures/landval.png}
+    \caption{Tax evaluation log(\$/m$^2$). Yellow/green indicates a higher cost per area and blue/purple indicates a lower cost per area. Residential areas have a higher evaluation per m$^2$ when compared to parks or forests. }
+\end{figure}
+
+\begin{table}[]
+\centering
+\caption{Area of selected variables in ascending order. All land includes the selected variables and land not categorized as priority habitat, wetland, developed, or forested. }
+\begin{tabular}{@{}lr@{}}
+\toprule
+\multicolumn{1}{c}{Category} & \multicolumn{1}{c}{Area (acres)} \\ \midrule
+Priority Habitat             & 218.5                            \\
+Wetland                      & 2276.1                           \\
+Developed                    & 3932.1                           \\
+Forest                       & 7489.0                           \\
+All Land                     & 14381.5                          \\ \bottomrule
+\end{tabular}
+\end{table}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\linewidth]{figures/prihab_cover.png}
+    \caption{Priority habitat areas of Franklin, MA.  }
+\end{figure}
+
+
+
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\linewidth]{figures/forest_cover.png}
+    \caption{Forest cover of Franklin, MA. Green areas represent deciduous or evergreen forest. One area of note is the protected Franklin State Forest in the south west quadrant of the town. }
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\linewidth]{figures/wet_cover.png}
+    \caption{Forest cover of Franklin, MA. Blue areas represent areas categorized as palustrine forested wetland, palustrine scrub/shrub wetland, palustrine emergent wetland. In the north west one can see a large area of connected wetland which is the protected the Army Corps of Engineer's land.  }
+\end{figure}
+
+\begin{table}[htbp]
+\caption{Mean±standard deviation results from the four selected variables. Each column is color coded. The darkest yellow is the maximum and the white is the minimum. }
+\resizebox{\textwidth}{!}{
+\begin{tabular}{crrrrrr}
+\hline
+ & \multicolumn{1}{c}{\begin{tabular}[c]{@{}c@{}}Number of \\Selected Parcels\end{tabular}} & \multicolumn{1}{c}{\begin{tabular}[c]{@{}c@{}}Area \\ (acres)\end{tabular}} & \multicolumn{1}{c}{\begin{tabular}[c]{@{}c@{}}Metric Area\\ (acres)\end{tabular}} & \multicolumn{1}{c}{Efficiency\%} & \multicolumn{1}{c}{\begin{tabular}[c]{@{}c@{}}Difference from\\ Budget\end{tabular}} & \multicolumn{1}{c}{\begin{tabular}[c]{@{}c@{}}\% Area Borders\\ Protected Land\end{tabular}} \\ \hline
+Optimal & \cellcolor[HTML]{FEE59F}15.5±5.0 & \cellcolor[HTML]{FDCA40}145.5±73.4 & \cellcolor[HTML]{FDCA40}102.7±59.4 & \cellcolor[HTML]{FEE59F}72.4±15.7 & \cellcolor[HTML]{FEE59F}33,475±28,149 & \cellcolor[HTML]{FEE59F}77.6±9.6 \\
+Largest & 2.5±1.0 & 64.0±30.1 & 45.5±21.1 & \cellcolor[HTML]{FDCA40}74.4±18.0 & \cellcolor[HTML]{FDCA40}153,350±22,292 & \cellcolor[HTML]{FDCA40}93.6±12.7 \\
+Least Expensive & \cellcolor[HTML]{FDCA40}32.5±18.4 & \cellcolor[HTML]{FEE59F}87.4±27.2 & \cellcolor[HTML]{FEE59F}62.2±27.7 & 69.0±21.8 & 31,600±6,513 & 44.8±21.8 \\ \hline
+\end{tabular}}
+\end{table}
+Table 9, shows summaries of the selection methods with color coded columns from maximum to minimum.
+
+
+\end{document}
