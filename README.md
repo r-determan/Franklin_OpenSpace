@@ -8,6 +8,6 @@ This project is an exploratory analysis of options for the Town of Franklin's al
 
 <figure>
   <img align = "right"
-       src="https://github.com/r-determan/Franklin_OpenSpace/blob/cfee6d5d7864a86885077afa88091e7fb747eff8/figures/existing_prot.png"   
+       src="https://github.com/r-determan/Franklin_OpenSpace/blob/a2e02c3f160708ea33eaba8598bad4ebe23b6656/figures/existing_prot.png"   
             width=100% height=100%> 
 </figure>
